@@ -56,6 +56,10 @@ app.command('/todo_add', async ({command, ack, say, client}) => {
 
 app.command('/todo_ls', async ({command, ack, say}) => {
   await ack();
+
+  if(!command.text) {
+    command.user_id
+  }
   const res = await getTask(1);
   console.log(res);
   console.log(res.dataValues);
