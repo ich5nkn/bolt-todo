@@ -23,7 +23,7 @@ export const blockEditor = ({tasks, user_name}: OwnProps) => {
                 "emoji": true
             },
             "value": `${task.task_id}`,
-            "action_id": "done-button"
+            "action_id": "done_click"
         }
     }))
     console.log('taskSections', taskSections);
