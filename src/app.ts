@@ -21,6 +21,8 @@ app.command('/todo_add', async ({command, ack, say, client}) => {
     return;
   };
 
+  await say(command.text);
+
   const textArray = command.text.split(' ');
 
   const users: string[] = [];
