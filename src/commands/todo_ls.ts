@@ -1,14 +1,36 @@
 import { App } from '@slack/bolt';
-import { getTask } from '../postgres';
+import { getTasksForUser } from '../postgres';
+
+
 
 export const todo_ls = (app: App) => {
     app.command('/todo_ls', async ({command, ack, say}) => {
         await ack();
-      
+
+        const sayTask = async (userId: string) => {
+            const tasks = await getTasksForUser(userId);
+        
+            if(tasks){
+                await say(tasks.map(task => `- ${task.dataValues.task_name}`).join('\n'));
+            } else {
+                await say("タスクがありません");
+            }
+        
+            return;
+        };
+
         if(!command.text) {
-          command.user_id
+            await sayTask(command.user_id);
         }
-        const res = await getTask(1);
-        await say(`${res.dataValues.task_name}`);
-      });
+
+        if(/^<@.*>$/.test(command.text)) {
+            const result = command.text.match(/(?<=\<@).*?(?=\|)/);
+            if(result) {
+                await sayTask(result[0]);
+            }
+        }
+        
+        await say("正しいユーザー名を記載してください（例：@ユーザーネーム）");
+        return;
+    });
 };

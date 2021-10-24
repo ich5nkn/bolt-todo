@@ -4,8 +4,7 @@ import { postTask } from '../postgres';
 export const todo_add = (app: App) => {
     app.command('/todo_add', async ({command, ack, say, client}) => {
         await ack();
-        // DBに人名とタスク名を追加する
-      
+
         if(!command.text){
           await say(`タスクを記載してください`);
           return;
@@ -41,8 +40,9 @@ export const todo_add = (app: App) => {
         const text = `users: ${users.join(',')} | tasks: ${tasks.join(',')} | mention: <@${users[0]}>`;
       
         // 引数に@があれば、別の人のタスクとして追加する
-      
         await say(text);
+
+        
       })
 };
 
