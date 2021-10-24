@@ -29,19 +29,22 @@ app.command('/todo_add', async ({command, ack, say, client}) => {
   const tasks: string[] = [];
 
   textArray.forEach(text => {
-    if(/^@.*/.test(text)) {
-      users.push(text);
+    if(/^<@.*>$/.test(text)) {
+      const result = text.match(/(?<=\<@).*?(?=\|)/);
+      if(result) {
+        users.push(result[0]);
+      }
     } else {
       tasks.push(text);
     }
-});
+  });
 
   // 第一引数に@がなければ自分のタスクとして追加する
   if (users.length === 0) {
     users.push(command.user_id);
   };
 
-  const text = `users: ${users.join(',')} | tasks: ${tasks.join(',')}`;
+  const text = `users: ${users.join(',')} | tasks: ${tasks.join(',')} | mention: <@${users[0]}>`;
 
   // 第一引数に@があれば、別の人のタスクとして追加する
 
