@@ -22,7 +22,7 @@ export const blockEditor = ({tasks, user_name}: OwnProps) => {
                 "text": "Done",
                 "emoji": true
             },
-            "value": task.task_id,
+            "value": `${task.task_id}`,
             "action_id": "done-button"
         }
     }))
