@@ -23,25 +23,27 @@ app.command('/todo_add', async ({command, ack, say}) => {
 
   const textArray = command.text.split(' ');
 
-  const user: string[] = [];
-  const task: string[] = [];
+  const users: string[] = [];
+  const tasks: string[] = [];
 
   textArray.forEach(text => {
     if(/^@.*/.test(text)) {
-      user.push(text);
+      users.push(text);
     } else {
-      task.push(text);
+      tasks.push(text);
     }
 });
 
   // 第一引数に@がなければ自分のタスクとして追加する
-  if (user.length === 0) {
-    user.push(command.user_id);
+  if (users.length === 0) {
+    users.push(command.user_id);
   };
+
+  const text = `users: ${users.join(',')} | tasks: ${tasks.join(',')}`;
 
   // 第一引数に@があれば、別の人のタスクとして追加する
 
-  await say(`〜さんのタスクを追加しました`);
+  await say(text);
 })
 
 app.command('/todo_ls', async ({command, ack, say}) => {
