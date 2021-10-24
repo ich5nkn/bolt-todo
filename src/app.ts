@@ -1,5 +1,5 @@
 import { App } from '@slack/bolt';
-import { getTask } from './postgres';
+import { getTask, postTask } from './postgres';
 console.log(process.env.SLACK_SIGNING_SECRET)
 console.log(process.env.SLACK_BOT_TOKEN)
 
@@ -44,6 +44,12 @@ app.command('/todo_add', async ({command, ack, say, client}) => {
   if (users.length === 0) {
     users.push(command.user_id);
   };
+
+  Promise.all(tasks.map(async(task) => {
+    await Promise.all(users.map(async(user) => {
+      await postTask(task,user);
+    }));
+  }));
 
   const text = `users: ${users.join(',')} | tasks: ${tasks.join(',')} | mention: <@${users[0]}>`;
 
