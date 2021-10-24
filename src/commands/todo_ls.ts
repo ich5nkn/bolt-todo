@@ -13,61 +13,7 @@ export const todo_ls = (app: App) => {
                     task_id: task.dataValues.task_id,
                     task_name: task.dataValues.task_name
                 }));
-
-                console.log('block >> ', blockEditor({tasks:taskList, user_name: userName}));
-
-                await say({
-                    "blocks": [
-                        {
-                            "type": "section",
-                            "text": {
-                                "type": "plain_text",
-                                "text": "This is a plain text section block.",
-                                "emoji": true
-                            }
-                        },
-                        {
-                            "type": "divider"
-                        },
-                        {
-                            "type": "section",
-                            "text": {
-                                "type": "mrkdwn",
-                                "text": "風呂に入る"
-                            },
-                            "accessory": {
-                                "type": "button",
-                                "text": {
-                                    "type": "plain_text",
-                                    "text": "Done",
-                                    "emoji": true
-                                },
-                                "value": "done_123",
-                                "action_id": "done-button"
-                            }
-                        },
-                        {
-                            "type": "divider"
-                        },
-                        {
-                            "type": "section",
-                            "text": {
-                                "type": "mrkdwn",
-                                "text": "This is a section block with a button."
-                            },
-                            "accessory": {
-                                "type": "button",
-                                "text": {
-                                    "type": "plain_text",
-                                    "text": "Click Me",
-                                    "emoji": true
-                                },
-                                "value": "click_me_123",
-                                "action_id": "button-action"
-                            }
-                        }
-                    ]
-                });
+                await say(blockEditor({tasks:taskList, user_name: userName}));
             } else {
                 await say("タスクがありません");
             }
