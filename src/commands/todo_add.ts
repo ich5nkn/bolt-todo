@@ -10,6 +10,7 @@ export const todo_add = (app: App) => {
           return;
         };
       
+        // 引数に@がなければ自分のタスクとして追加する
         const textArray = command.text.split(' ');
       
         const users: string[] = [];
@@ -39,10 +40,6 @@ export const todo_add = (app: App) => {
       
         const text = `users: ${users.join(',')} | tasks: ${tasks.join(',')} | mention: <@${users[0]}>`;
       
-        // 引数に@があれば、別の人のタスクとして追加する
         await say(text);
-
-        
       })
 };
-
