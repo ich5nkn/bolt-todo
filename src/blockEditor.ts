@@ -40,7 +40,7 @@ export const blockEditor = ({tasks, user_name}: OwnProps) => {
             {
                 "type": "divider"
             },
-            // ...taskSections,
+            ...taskSections,
             {
                 "type": "divider"
             }
