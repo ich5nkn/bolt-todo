@@ -12,7 +12,7 @@ const app = new App({
   console.log('⚡️ Bolt app is running!');
 })();
 
-app.command('/todo_add', async ({command, ack, say}) => {
+app.command('/todo_add', async ({command, ack, say, client}) => {
   await ack();
   // DBに人名とタスク名を追加する
 
@@ -42,6 +42,8 @@ app.command('/todo_add', async ({command, ack, say}) => {
   const text = `users: ${users.join(',')} | tasks: ${tasks.join(',')}`;
 
   // 第一引数に@があれば、別の人のタスクとして追加する
+
+  console.log(await client.users.list());
 
   await say(text);
 })
