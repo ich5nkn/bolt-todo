@@ -12,7 +12,7 @@ const app = new App({
   console.log('⚡️ Bolt app is running!');
 })();
 
-app.command('todo_ls', async ({command, ack, respond}) => {
+app.command('/todo_ls', async ({command, ack, say}) => {
   await ack();
-  await respond(`${command.text}`);
+  await say(`${command.text}`);
 });
