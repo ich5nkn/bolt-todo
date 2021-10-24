@@ -12,7 +12,7 @@ const app = new App({
   console.log('⚡️ Bolt app is running!');
 })();
 
-app.command('/todo_add', async ({command, ack, say}) => {
+app.command('/todo_add', async ({command, ack, say, client}) => {
   await ack();
   // DBに人名とタスク名を追加する
 
@@ -21,27 +21,36 @@ app.command('/todo_add', async ({command, ack, say}) => {
     return;
   };
 
+  console.log(command.text);
+
   const textArray = command.text.split(' ');
 
-  const user: string[] = [];
-  const task: string[] = [];
+  const users: string[] = [];
+  const tasks: string[] = [];
 
   textArray.forEach(text => {
-    if(/^@.*/.test(text)) {
-      user.push(text);
+    if(/^<@.*>$/.test(text)) {
+      const result = text.match(/(?<=\<@).*?(?=\|)/);
+      if(result) {
+        users.push(result[0]);
+      }
     } else {
-      task.push(text);
+      tasks.push(text);
     }
-});
+  });
 
   // 第一引数に@がなければ自分のタスクとして追加する
-  if (user.length === 0) {
-    user.push(command.user_id);
+  if (users.length === 0) {
+    users.push(command.user_id);
   };
+
+  const text = `users: ${users.join(',')} | tasks: ${tasks.join(',')} | mention: <@${users[0]}>`;
 
   // 第一引数に@があれば、別の人のタスクとして追加する
 
-  await say(`〜さんのタスクを追加しました`);
+  console.log(await client.users.list());
+
+  await say(text);
 })
 
 app.command('/todo_ls', async ({command, ack, say}) => {
