@@ -1,4 +1,5 @@
 import { App } from '@slack/bolt';
+import { getTask } from './postgres';
 console.log(process.env.SLACK_SIGNING_SECRET)
 console.log(process.env.SLACK_BOT_TOKEN)
 
@@ -55,5 +56,8 @@ app.command('/todo_add', async ({command, ack, say, client}) => {
 
 app.command('/todo_ls', async ({command, ack, say}) => {
   await ack();
-  await say(`${command.text}`);
+  const res = await getTask(1);
+  console.log(res);
+  console.log(res.dataValues);
+  await say(`${res.dataValues.task_name}`);
 });
