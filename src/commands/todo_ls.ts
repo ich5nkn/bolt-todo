@@ -9,24 +9,23 @@ export const todo_ls = (app: App) => {
 
         const sayTask = async (userId: string) => {
             const tasks = await getTasksForUser(userId);
-        
             if(tasks){
                 await say(tasks.map(task => `- ${task.dataValues.task_name}`).join('\n'));
             } else {
                 await say("タスクがありません");
             }
-        
-            return;
         };
 
         if(!command.text) {
             await sayTask(command.user_id);
+            return;
         }
 
         if(/^<@.*>$/.test(command.text)) {
             const result = command.text.match(/(?<=\<@).*?(?=\|)/);
             if(result) {
                 await sayTask(result[0]);
+                return;
             }
         }
         
