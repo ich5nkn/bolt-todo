@@ -7,7 +7,7 @@ export const done_click = (app: App) => {
         const anyPayload = payload as any;
         console.log(anyPayload);
         // anyPayload.valueをカンマ区切りで取得して、タスクIDとユーザーIDに分割
-        // ユーザーIDを引数にtask_lsを実行してレスポンドする
+        // レスポンドの中でユーザーIDを引数にtodo_lsと同様の処理を実行
         console.log(anyPayload.value);
         if(Number(anyPayload.value)){
             updateDoneTask(Number(anyPayload.value));
