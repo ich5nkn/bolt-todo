@@ -6,6 +6,8 @@ export const done_click = (app: App) => {
         await ack();
         const anyPayload = payload as any;
         console.log(anyPayload);
+        // anyPayload.valueをカンマ区切りで取得して、タスクIDとユーザーIDに分割
+        // ユーザーIDを引数にtask_lsを実行してレスポンドする
         console.log(anyPayload.value);
         if(Number(anyPayload.value)){
             updateDoneTask(Number(anyPayload.value));

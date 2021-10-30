@@ -22,6 +22,7 @@ export const blockEditor = ({tasks, user_name}: OwnProps) => {
                 "text": "Done",
                 "emoji": true
             },
+            // value：カンマ区切りでタスクIDとユーザーIDを渡す
             "value": `${task.task_id}`,
             "action_id": "done_click"
         }
