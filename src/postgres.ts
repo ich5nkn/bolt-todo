@@ -5,21 +5,31 @@ import { getTaskResult } from './types';
 export const getTasksForUser = (userId: string) => {
     return models.Tasks.findAll({
         where: {
-            user_id: userId
+            user_id: userId,
+            is_done: false
         }
     }) as Promise<Array<getTaskResult>>;
 };
 
-const getMaxTaskId = () => {
-    return models.Tasks.max("task_id");
-};
-
 export const postTask = async (taskName: string, userId: string) => {
-    console.log( await getMaxTaskId());
+    const getMaxTaskId = () => {
+        return models.Tasks.max("task_id");
+    };
+
     return models.Tasks.create({
         task_id: await getMaxTaskId() + 1,
         task_name: taskName,
         user_id: userId,
         is_done: false,
+    });
+};
+
+export const updateDoneTask = (taskId: number) => {
+    models.Tasks.update({
+        is_done: true,
+    },{
+        where: {
+            task_id: taskId,
+        }
     });
 };
