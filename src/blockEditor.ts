@@ -10,39 +10,27 @@ interface OwnProps {
 
 export const blockEditor = ({tasks, user_name}: OwnProps) => {
     const taskSections = tasks.map(task => ({
-        "type": "section",
         "text": {
-            "type": "mrkdwn",
-            "text": task.task_name
+            "type": "plain_text",
+            "text": task.task_name,
+            "emoji": true
         },
-        "accessory": {
-            "type": "button",
-            "text": {
-                "type": "plain_text",
-                "text": "Done",
-                "emoji": true
-            },
-            "value": `${task.task_id}`,
-            "action_id": "done_click"
-        }
-    }))
-    console.log('taskSections', taskSections);
+        "value": `${task.task_id}`
+    }));
     return {
         "blocks": [
             {
-                "type": "section",
-                "text": {
+                "type": "input",
+                "element": {
+                    "type": "checkboxes",
+                    "options": taskSections,
+                    "action_id": "checkboxes-action"
+                },
+                "label": {
                     "type": "plain_text",
-                    "text": `${user_name} のTODO`,
+                    "text": `${user_name}のTODO`,
                     "emoji": true
                 }
-            },
-            {
-                "type": "divider"
-            },
-            ...taskSections,
-            {
-                "type": "divider"
             }
         ]
     }
