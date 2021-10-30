@@ -10,7 +10,7 @@ interface OwnProps {
 
 export const blockEditor = ({tasks, user_name}: OwnProps) => {
     const taskSections = tasks.map(task => ({
-        "type": "section",
+        "type": "action",
         "text": {
             "type": "mrkdwn",
             "text": task.task_name
