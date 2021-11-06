@@ -13,10 +13,10 @@ interface BlockEditorProps {
 
 const blockEditor = ({tasks, user_name, user_id}: BlockEditorProps) => {
     const taskSections = tasks.map(task => ({
+        "type": "section",
         "text": {
-            "type": "plain_text",
-            "text": task.task_name,
-            "emoji": true
+            "type": "mrkdwn",
+            "text": task.task_name
         },
         "accessory": {
             "type": "button",
@@ -32,18 +32,20 @@ const blockEditor = ({tasks, user_name, user_id}: BlockEditorProps) => {
     return {
         "blocks": [
             {
-                "type": "input",
-                "element": {
-                    "type": "checkboxes",
-                    "options": taskSections,
-                    "action_id": "checkboxes-action"
-                },
-                "label": {
+                "type": "section",
+                "text": {
                     "type": "plain_text",
                     "text": `${user_name}のTODO`,
                     "emoji": true
                 }
-            }
+            },
+            {
+                "type": "divider"
+            },
+            ...taskSections,
+            {
+                "type": "divider"
+            },
         ]
     }
 }
