@@ -11,7 +11,7 @@ export const done_click = (app: App) => {
         // レスポンドの中でユーザーIDを引数にtodo_lsと同様の処理を実行
         // doneに更新
         if(Number(taskId)){
-            updateDoneTask(Number(taskId));
+            await updateDoneTask(Number(taskId));
         }
         const tasks = await createTaskView({userId, userName})
         if(!tasks){

@@ -24,8 +24,8 @@ export const postTask = async (taskName: string, userId: string) => {
     });
 };
 
-export const updateDoneTask = (taskId: number) => {
-    models.Tasks.update({
+export const updateDoneTask = async (taskId: number) => {
+    await models.Tasks.update({
         is_done: true,
     },{
         where: {
