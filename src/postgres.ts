@@ -11,13 +11,13 @@ export const getTasksForUser = (userId: string) => {
     }) as Promise<Array<getTaskResult>>;
 };
 
-export const postTask = async (taskName: string, userId: string) => {
+export const postTask = async (taskName: string, userId: string, taskIdx: number) => {
     const getMaxTaskId = () => {
         return models.Tasks.max("task_id");
     };
 
     return models.Tasks.create({
-        task_id: await getMaxTaskId() + 1,
+        task_id: await getMaxTaskId() + 1 + taskIdx,
         task_name: taskName,
         user_id: userId,
         is_done: false,

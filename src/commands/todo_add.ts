@@ -32,11 +32,11 @@ export const todo_add = (app: App) => {
           users.push(command.user_id);
         };
       
-        tasks.map(async(task) => {
+        Promise.all(tasks.map(async(task, idx) => {
           await Promise.all(users.map(async(user) => {
-            await postTask(task,user);
+            await postTask(task, user, idx);
           }));
-        });
+        }));
       
         const text = `users: ${users.join(',')} | tasks: ${tasks.join(',')} | mention: <@${users[0]}>`;
       
