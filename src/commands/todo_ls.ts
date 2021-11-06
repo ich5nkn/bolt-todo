@@ -1,22 +1,17 @@
 import { App } from '@slack/bolt';
-import { blockEditor } from '../blockEditor';
-import { getTasksForUser } from '../postgres';
+import { createTaskView } from '../blockEditor';
 
 export const todo_ls = (app: App) => {
     app.command('/todo_ls', async ({command, ack, say}) => {
         await ack();
 
         const sayTask = async (userId: string, userName: string) => {
-            const tasks = await getTasksForUser(userId);
-            if(tasks){
-                const taskList = tasks.map(task => ({
-                    task_id: task.dataValues.task_id,
-                    task_name: task.dataValues.task_name
-                }));
-                await say(blockEditor({tasks:taskList, user_name: userName}));
-            } else {
+            const tasks = await createTaskView({userId, userName});
+            if(!tasks){
                 await say("タスクがありません");
+                return;
             }
+            await say (tasks)
         };
 
         if(!command.text) {
