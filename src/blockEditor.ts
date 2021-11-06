@@ -57,7 +57,7 @@ interface CreateTaskViewProps {
 
 export const createTaskView = async({userId, userName}: CreateTaskViewProps) => {
     const tasks = await getTasksForUser(userId);
-    if(tasks){
+    if(tasks.length > 0){
         const taskList = tasks.map(task => ({
             task_id: task.dataValues.task_id,
             task_name: task.dataValues.task_name
