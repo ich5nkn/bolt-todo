@@ -54,15 +54,12 @@ interface CreateTaskViewProps {
 }
 
 export const createTaskView = async({userId, userName}: CreateTaskViewProps) => {
-    console.log("createTaskViewProps: ", {userId, userName});
     const tasks = await getTasksForUser(userId);
-    console.log('tasks in createTaskView: ', tasks);
     if(tasks){
         const taskList = tasks.map(task => ({
             task_id: task.dataValues.task_id,
             task_name: task.dataValues.task_name
         }));
-        console.log('taskList: ', taskList);
         return blockEditor({ tasks:taskList, user_name: userName, user_id: userId });
     } else {
         return null;
