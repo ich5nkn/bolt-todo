@@ -5,8 +5,10 @@ export const todo_ls = (app: App) => {
     app.command('/todo_ls', async ({command, ack, say}) => {
         await ack();
 
+        console.log('command', command);
         const sayTask = async (userId: string, userName: string) => {
             const tasks = await createTaskView({userId, userName});
+            console.log('tasks in todo_ls', tasks);
             if(!tasks){
                 await say("タスクがありません");
                 return;
