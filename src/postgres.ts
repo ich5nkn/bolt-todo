@@ -7,7 +7,8 @@ export const getTasksForUser = (userId: string) => {
         where: {
             user_id: userId,
             is_done: false
-        }
+        },
+        order: ['task_id', 'ASC']
     }) as Promise<Array<getTaskResult>>;
 };
 
